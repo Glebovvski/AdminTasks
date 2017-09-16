@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cypher Marketing</title>
+
+    @Styles.Render("~/bundles/css")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="wrapper">
+            @Html.Partial("Nav")
+        <!-- Begin Page Wrapper -->
+        <div id="page-wrapper">
+            @if (TempData["Status"] != null)
+            {
+                <div class="alert alert-info">@TempData["Status"]</div> 
+            }
+            @RenderBody()
+        </div>
+        <!-- End Page Wrapper -->
+    </div>
+</body>
+</html>

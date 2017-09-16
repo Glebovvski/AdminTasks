@@ -1,0 +1,33 @@
+﻿<div id="suggestionWidget" class="panel panel-green widget">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-xs-3">
+                <i class="fa fa-tasks fa-5x"></i>
+            </div>
+            <div class="col-xs-9 text-right">
+                <h3>Continuous Improvement</h3>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-xs-12 feature-request">
+                <p>Have a feature request or suggestion for how we can improve this app? Let us know! Send us a suggestion.</p>
+                @{ 
+                    var options = new AjaxOptions()
+                    {
+                        HttpMethod = "Post",
+                        InsertionMode = InsertionMode.ReplaceWith,
+                        UpdateTargetId = "suggestionWidget"
+                    };
+                }
+                @using (Ajax.BeginForm("Suggestion", "Home", options))
+                {
+                    <textarea class="form-control" id="suggestion" rows="5" type="text" name="suggestion"></textarea>
+                    <input type="submit" value="Submit" class="improvement btn btn-primary pull-right"/> 
+                }
+            </div>
+        </div>
+    </div>
+</div>
+       

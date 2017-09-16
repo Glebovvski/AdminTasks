@@ -1,0 +1,37 @@
+﻿@model List<CypherMVC.Models.Admin>
+
+<div class="panel panel-primary widget">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-xs-3">
+                <i class="fa fa-comments fa-5x"></i>
+            </div>
+            <div class="col-xs-9 text-right">
+                <h3>Rep of the Month</h3>
+                <p>You can only vote once!</p>
+            </div>
+        </div>
+    </div>
+    <div class="widget-display">
+        <table class="table table-fluid table-striped">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Add Vote</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var admin in Model)
+                {
+                    <tr>
+                        <td>@admin.Username</td>
+                        <td>@admin.Votes.Count</td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="3">Thank you for your vote! Remember< You can only vote once</td>
+                    </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>

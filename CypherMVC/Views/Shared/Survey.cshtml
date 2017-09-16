@@ -1,0 +1,50 @@
+﻿@model List<CypherMVC.Models.Admin>
+
+<script>
+    $(document).ready(function () {
+        $(".vote-up").click(function (e) {
+            e.preventDefault();
+            var id = $(this).data("userid");
+            var url = "@Url.Action("survey", "home")";
+            $.post(url, { adminId: id }, function (responseData) {
+                $("#votingWidget").replaceWith(responseData);
+            });
+        })
+    })
+</script>
+
+<div id="votingWidget" class="panel panel-primary widget">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-xs-3">
+                <i class="fa fa-comments fa-5x"></i>
+            </div>
+            <div class="col-xs-9 text-right">
+                <h3>Rep of the Month</h3>
+                <p>You can only vote once!</p>
+            </div>
+        </div>
+    </div>
+    <div class="widget-display">
+        @using (Html.BeginForm("Survey", "Home"))
+        {
+        <table class="table table-fluid table-striped">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Add Vote</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var admin in Model)
+                {
+                    <tr>
+                        <td>@admin.Username</td>
+                        <td><a href="#" class="vote-up" data-userid="@admin.Id">Vote Up</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        }
+    </div>
+</div>

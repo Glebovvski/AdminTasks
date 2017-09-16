@@ -1,0 +1,91 @@
+﻿@model CypherMVC.Models.TaskVM
+
+<script>
+    $(function () {
+        $(".msg-suggestion").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("MessageSuggestions","Task")',
+                    type: 'Get',
+                    dataType: 'json',
+                    data: request,
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return {
+                                label: ite.label,
+                                id: item.id
+                            };
+                        }));
+                    }
+                })
+            },
+            select: function (event, ui) {
+                $(".msg-id").val(ui.item.id);
+            }
+        });
+    });
+</script>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">
+            Create a New Task<br />
+            <small>These are issues your team members should take care of - ASAP!</span></small>
+        </h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        @Html.ValidationSummary()
+        @using (Html.BeginForm("CreateEdit", "Task"))
+        {
+            <div class="form-group">
+                @Html.LabelFor(x => x.Title, "Title")
+                @Html.TextBoxFor(x => x.Title, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x=>x.Title)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.Description, "Description")
+                @Html.TextAreaFor(x => x.Description, new { @class = "form-control", rows = 5 })
+                @Html.ValidationMessageFor(x => x.Description)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.CategoryId, "Category")
+                @Html.DropDownListFor(x => x.CategoryId, (List<SelectListItem>)ViewBag.Categories, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.CategoryId)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.DueDate, "Due Date")
+                @Html.TextBoxFor(x => x.DueDate, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.DueDate)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.AssignedToId, "Assigned To")
+                @Html.TextBoxFor(x => x.AssignedToId, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.AssignedToId)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.AssociatedMessageId, "Associated Message")
+                @Html.TextBoxFor(x => x.AssociatedMessageDisplay, new { @class = "form-control msg-suggestion" })
+                @Html.ValidationMessageFor(x => x.AssociatedMessageId)
+            </div>
+            <div class="form-group">
+                @Html.HiddenFor(x=>x.AssociatedMessageId, new { @class="form-control msg-id"})
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.Notes, "Notes")
+                @Html.TextAreaFor(x => x.Notes, new { @class = "form-control", rows = 5 })
+                @Html.ValidationMessageFor(x => x.Notes)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.Completed, "Is Complete")
+                @Html.CheckBoxFor(x => x.Completed)
+                @Html.ValidationMessageFor(x => x.Completed)
+            </div>
+            <div class="form-group">
+                <input class="btn btn-primary pull-right" type="submit" text="Submit">
+            </div>
+        }
+    </div>
+</div>

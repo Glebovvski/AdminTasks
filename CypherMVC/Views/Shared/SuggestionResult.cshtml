@@ -1,0 +1,38 @@
+﻿@model bool
+
+<div  id="suggestionWidget" class="panel panel-green widget">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-xs-3">
+                <i class="fa fa-tasks fa-5x"></i>
+            </div>
+            <div class="col-xs-9 text-right">
+                <h3>Continuous Improvement</h3>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-xs-12 feature-request">
+               @if (Model)
+               {
+                   <p class="alert alert-success">Thank you for your feedback! You'll hear from us soon.</p>
+               }
+               else
+               {
+                   <p class="alert alert-danger">Your feedback could not be sent.</p>
+               }
+                @{ 
+                    var options = new AjaxOptions()
+                    {
+                        HttpMethod = "Get",
+                        InsertionMode = InsertionMode.ReplaceWith,
+                        UpdateTargetId = "suggestionWidget"
+                    };
+                }
+                <p>@Ajax.ActionLink("Send Another", "Suggestion",null, options, new { @class = "pull-right btn btn-primary"})</p>
+            </div>
+        </div>
+    </div>
+</div>
+       

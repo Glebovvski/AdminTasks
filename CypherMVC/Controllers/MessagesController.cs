@@ -9,10 +9,15 @@ namespace CypherMVC.Controllers
 {
     public class MessagesController : Controller
     {
+        private FeedbackContext context;
+
+        public MessagesController(FeedbackContext _context)
+        {
+            context = _context;
+        }
+
         public ActionResult ViewAll()
         {
-            var context = new FeedbackContext();
-
             var messages = context.Threads
                                   .SelectMany(x => x.Messages)
                                   .OrderByDescending(x => x.Created)
@@ -24,7 +29,6 @@ namespace CypherMVC.Controllers
 
         public ActionResult Reply(int id)
         {
-            var context = new FeedbackContext();
             var threads = context.Threads.First(x => x.MessageThreadId == id)
                                          .Messages.OrderBy(x => x.Created)
                                          .ToList();
@@ -44,7 +48,6 @@ namespace CypherMVC.Controllers
         [HttpPost]
         public ActionResult Reply(int id, string content)
         {
-            var context = new FeedbackContext();
             var threads = context.Threads.FirstOrDefault(x => x.MessageThreadId == id);
 
             if (threads != null)
